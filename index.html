@@ -1,175 +1,75 @@
 <!DOCTYPE html>
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- 添加移动设备视口设置 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <link type="text/css" rel="stylesheet" href="./index_files/default.css">
-    <script type="text/javascript" src="./index_files/jquery.min.js"></script>
-    <script type="text/javascript" src="./index_files/jscex.min.js"></script>
-    <script type="text/javascript" src="./index_files/jscex-parser.js"></script>
-    <script type="text/javascript" src="./index_files/jscex-jit.js"></script>
-    <script type="text/javascript" src="./index_files/jscex-builderbase.min.js"></script>
-    <script type="text/javascript" src="./index_files/jscex-async.min.js"></script>
-    <script type="text/javascript" src="./index_files/jscex-async-powerpack.min.js"></script>
-    <script type="text/javascript" src="./index_files/functions.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./index_files/love.js" charset="utf-8"></script>
-    
-    <style type="text/css">
-        /* 添加响应式样式 */
-        body {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            background-color: #ffe;
-        }
-        
-        #main {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        
-        #wrap {
-            width: 100%;
-            max-width: 1100px;
-            position: relative;
-        }
-        
-        #text {
-            position: relative;
-            z-index: 10;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        
-        #code {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #333;
-            text-align: center;
-        }
-        
-        .say {
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-        
-        #clock-box {
-            margin: 20px auto;
-            text-align: center;
-            font-size: 18px;
-            color: #666;
-        }
-        
-        #canvas {
-            width: 100%;
-            height: auto;
-            max-height: 60vh;
-            display: block;
-            margin: 0 auto;
-            touch-action: none;
-        }
-        
-        /* 手机端特定样式 */
-        @media screen and (max-width: 768px) {
-            #code {
-                font-size: 14px;
-            }
-            
-            #clock-box {
-                font-size: 16px;
-            }
-            
-            .say {
-                margin-bottom: 8px;
-            }
-        }
-        
-        @media screen and (max-width: 480px) {
-            #code {
-                font-size: 12px;
-            }
-            
-            #clock-box {
-                font-size: 14px;
-            }
-        }
-    </style>
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<!-- <title>刘信灵与杨美欣日期纪念功能</title> -->
+	    
+        <link type="text/css" rel="stylesheet" href="./index_files/default.css">
+		<script type="text/javascript" src="./index_files/jquery.min.js"></script>
+		<script type="text/javascript" src="./index_files/jscex.min.js"></script>
+		<script type="text/javascript" src="./index_files/jscex-parser.js"></script>
+		<script type="text/javascript" src="./index_files/jscex-jit.js"></script>
+		<script type="text/javascript" src="./index_files/jscex-builderbase.min.js"></script>
+		<script type="text/javascript" src="./index_files/jscex-async.min.js"></script>
+		<script type="text/javascript" src="./index_files/jscex-async-powerpack.min.js"></script>
+		<script type="text/javascript" src="./index_files/functions.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./index_files/love.js" charset="utf-8"></script>
+	    <style type="text/css">
+<!--
+.STYLE1 {color: #666666}
+-->
+        </style>
 </head>
-<body>
-    <div id="main">
-        <div id="wrap">
-            <div id="text">
-                <div id="code" style="display: none;">
-                    <span class="say">* 致欣欣： *</span><br>
-                    <span class="say"> </span><br>
-                    <span class="say">· 欣欣，对不起，昨天的电话又让你不开心了。</span><br>
-                    <span class="say"> </span><br>
-                    <span class="say">· 其实你说的每句话我都记在心里，只是我太笨了，不知道该怎么回应才能让你感受到我在认真听。</span><br>
-                    <span class="say"> </span><br>
-                    <span class="say">· 第一次打电话时我太紧张了，手脚都不知道该怎么放，拘谨得像个傻子，让你觉得不舒服了吧。</span><br>
-                    <span class="say"> </span><br>
-                    <span class="say">· 更蠢的是，昨天你生气了我居然没察觉到，还自顾自地扯其他话题，没有及时哄你，让你觉得我不在乎你的情绪。</span><br>
-                    <span class="say"> </span><br>
-                    <span class="say">· 我真的不是故意的，更不是虚情假意。只是我太不会处理这些情况，笨手笨脚的总做错事。</span><br>
-                    <span class="say"> </span><br>
-                    <span class="say">· 我在努力学着怎么去爱一个人，虽然现在做得不好，但我会慢慢变好的，因为那个人是你。</span><br>
-                    <span class="say"> </span><br>
-                    <span class="say">· 请相信我，我对你的心意都是真的。</span><br>
-                    <span class="say"> </span><br>
+    <body>
+        <div id="main">
+            <div id="wrap">
+                <div id="text">
+			        <div id="code">
+			        	<span class="say">* 致欣欣： *</span><br>
+						<span class="say"> </span><br>
+			        	<span class="say">· 欣欣，对不起，昨天的电话又让你不开心了。</span><br>
+						<span class="say"> </span><br>
+			        	<span class="say">· 其实你说的每句话我都记在心里，只是我太笨了，不知道该怎么回应才能让你感受到我在认真听。</span><br>
+                        <span class="say"> </span><br>
+                        <span class="say">· 第一次打电话时我太紧张了，手脚都不知道该怎么放，拘谨得像个傻子，让你觉得不舒服了吧。</span><br>
+						<span class="say"> </span><br>
+
+                         <span class="say">· 更蠢的是，昨天你生气了我居然没察觉到，还自顾自地扯其他话题，没有及时哄你，让你觉得我不在乎你的情绪。</span><br>
+						<span class="say"> </span><br>
+                         <span class="say">· 我真的不是故意的，更不是虚情假意。只是我太不会处理这些情况，笨手笨脚的总做错事。</span><br>
+						<span class="say"> </span><br>
+                        
+                         <span class="say">· 我在努力学着怎么去爱一个人，虽然现在做得不好，但我会慢慢变好的，因为那个人是你。</span><br>
+						<span class="say"> </span><br>
+                         <span class="say">· 请相信我，我对你的心意都是真的。</span><br>
+						<span class="say"> </span><br>
+
+			        </div>
                 </div>
-            </div>
-            <div id="clock-box" style="display: none;">
-                <div id="clock"></div>
-            </div>
-            <canvas id="canvas"></canvas>
+                <div id="clock-box">
+                   
+                  <div id="clock"></div>
+              </div>
+              <canvas id="canvas" width="1100" height="680"></canvas>
+              </div>
+            
         </div>
-    </div>
+    
+    <script>
+    </script>
 
     <script>
     (function(){
-        // 动态设置canvas尺寸
-        function resizeCanvas() {
-            var canvas = $('#canvas');
-            var wrapWidth = $('#wrap').width();
-            var canvasHeight = Math.min(window.innerHeight * 0.6, 680);
-            
-            // 保持原始宽高比
-            var canvasWidth = Math.min(wrapWidth, 1100);
-            canvasHeight = canvasWidth * (680 / 1100);
-            
-            canvas.attr("width", canvasWidth);
-            canvas.attr("height", canvasHeight);
-            
-            return {
-                width: canvasWidth,
-                height: canvasHeight
-            };
-        }
-        
-        var canvasSize = resizeCanvas();
         var canvas = $('#canvas');
-        var width = canvasSize.width;
-        var height = canvasSize.height;
+		
+        if (!canvas[0].getContext) {
+            $("#error").show();
+            return false;
+        }
+
+        var width = canvas.width();
+        var height = canvas.height();
         
-        // 窗口大小改变时重新调整canvas尺寸
-        $(window).on('resize', function() {
-            canvasSize = resizeCanvas();
-            width = canvasSize.width;
-            height = canvasSize.height;
-            
-            // 重新初始化树
-            if (typeof tree !== 'undefined') {
-                tree.resize(width, height);
-            }
-        });
+        canvas.attr("width", width);
+        canvas.attr("height", height);
 
         var opts = {
             seed: {
@@ -196,12 +96,12 @@
                 ]] 
             ],
             bloom: {
-                num: Math.min(700, width * height / 1000),
-                width: width,
-                height: height * 0.95,
+                num: 700,
+                width: 1080,
+                height: 650,
             },
             footer: {
-                width: width,
+                width: 1200,
                 height: 5,
                 speed: 10,
             }
@@ -212,45 +112,20 @@
         var foot = tree.footer;
         var hold = 1;
 
-        // 添加触摸事件支持
-        canvas.on('click touchstart', function(e) {
-            if (e.type === 'touchstart') {
-                e.preventDefault();
-                var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-                var offset = canvas.offset();
-                var x = touch.pageX - offset.left;
-                var y = touch.pageY - offset.top;
-                
-                if (seed.hover(x, y)) {
-                    hold = 0;
-                    canvas.off('click touchstart');
-                    canvas.off('mousemove touchmove');
-                    canvas.removeClass('hand');
-                }
-            } else {
-                var offset = canvas.offset(), x, y;
-                x = e.pageX - offset.left;
-                y = e.pageY - offset.top;
-                if (seed.hover(x, y)) {
-                    hold = 0;
-                    canvas.off('click touchstart');
-                    canvas.off('mousemove touchmove');
-                    canvas.removeClass('hand');
-                }
-            }
-        }).on('mousemove touchmove', function(e) {
+        canvas.click(function(e) {
             var offset = canvas.offset(), x, y;
-            
-            if (e.type === 'touchmove') {
-                e.preventDefault();
-                var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-                x = touch.pageX - offset.left;
-                y = touch.pageY - offset.top;
-            } else {
-                x = e.pageX - offset.left;
-                y = e.pageY - offset.top;
+            x = e.pageX - offset.left;
+            y = e.pageY - offset.top;
+            if (seed.hover(x, y)) {
+                hold = 0; 
+                canvas.unbind("click");
+                canvas.unbind("mousemove");
+                canvas.removeClass('hand');
             }
-            
+        }).mousemove(function(e){
+            var offset = canvas.offset(), x, y;
+            x = e.pageX - offset.left;
+            y = e.pageY - offset.top;
             canvas.toggleClass('hand', seed.hover(x, y));
         });
 
@@ -272,26 +147,27 @@
 
         var growAnimate = eval(Jscex.compile("async", function () {
             do {
-                tree.grow();
+    	        tree.grow();
                 $await(Jscex.Async.sleep(10));
             } while (tree.canGrow());
         }));
 
         var flowAnimate = eval(Jscex.compile("async", function () {
             do {
-                tree.flower(2);
+    	        tree.flower(2);
                 $await(Jscex.Async.sleep(10));
             } while (tree.canFlower());
         }));
 
         var moveAnimate = eval(Jscex.compile("async", function () {
-            tree.snapshot("p1", 240, 0, 610, height);
+            tree.snapshot("p1", 240, 0, 610, 680);
             while (tree.move("p1", 500, 0)) {
                 foot.draw();
                 $await(Jscex.Async.sleep(10));
             }
             foot.draw();
-            tree.snapshot("p2", 500, 0, 610, height);
+            tree.snapshot("p2", 500, 0, 610, 680);
+
 
             canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
             canvas.css("background", "#ffe");
@@ -308,16 +184,16 @@
                 $await(Jscex.Async.sleep(25));
             }
         }));
-
+       //下面修改起始日期
         var textAnimate = eval(Jscex.compile("async", function () {
-            var together = new Date();
-            together.setFullYear(2025, 8, 8); // 时间年月日 月份0~11
-            together.setHours(16); // 小时    
-            together.setMinutes(28); // 分钟
-            together.setSeconds(2); // 秒前一位
-            together.setMilliseconds(2); // 秒第二位
+		    var together = new Date();
+		    together.setFullYear(2025, 8, 8); 			//时间年月日 月份0~11
+		    together.setHours(16);						//小时	
+		    together.setMinutes(28);					//分钟
+		    together.setSeconds(2);					//秒前一位
+		    together.setMilliseconds(2);				//秒第二位
 
-            $("#code").show().typewriter();
+		    $("#code").show().typewriter();
             $("#clock-box").fadeIn(500);
             while (true) {
                 timeElapse(together);
@@ -339,6 +215,6 @@
         runAsync().start();
     })();
     </script>
-    <iframe src="./给你们.mp3" allow="autoplay" hidden></iframe>
+    <iframe src = "./给你们.mp3" allow = "autoplay" hidden /> //自己修改音乐位置
 </body>
 </html>

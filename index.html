@@ -1,220 +1,508 @@
 <!DOCTYPE html>
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<!-- <title>刘信灵与杨美欣日期纪念功能</title> -->
-	    
-        <link type="text/css" rel="stylesheet" href="./index_files/default.css">
-		<script type="text/javascript" src="./index_files/jquery.min.js"></script>
-		<script type="text/javascript" src="./index_files/jscex.min.js"></script>
-		<script type="text/javascript" src="./index_files/jscex-parser.js"></script>
-		<script type="text/javascript" src="./index_files/jscex-jit.js"></script>
-		<script type="text/javascript" src="./index_files/jscex-builderbase.min.js"></script>
-		<script type="text/javascript" src="./index_files/jscex-async.min.js"></script>
-		<script type="text/javascript" src="./index_files/jscex-async-powerpack.min.js"></script>
-		<script type="text/javascript" src="./index_files/functions.js" charset="utf-8"></script>
-		<script type="text/javascript" src="./index_files/love.js" charset="utf-8"></script>
-	    <style type="text/css">
-<!--
-.STYLE1 {color: #666666}
--->
-        </style>
-</head>
-    <body>
-        <div id="main">
-            <div id="wrap">
-                <div id="text">
-			        <div id="code">
-			        	<span class="say">* 致欣欣： *</span><br>
-						<span class="say"> </span><br>
-			        	<span class="say">· 欣欣，对不起，昨天的电话又让你不开心了。</span><br>
-						<span class="say"> </span><br>
-			        	<span class="say">· 其实你说的每句话我都记在心里，只是我太笨了，不知道该怎么回应才能让你感受到我在认真听。</span><br>
-                        <span class="say"> </span><br>
-                        <span class="say">· 第一次打电话时我太紧张了，手脚都不知道该怎么放，拘谨得像个傻子，让你觉得不舒服了吧。</span><br>
-						<span class="say"> </span><br>
-
-                         <span class="say">· 更蠢的是，昨天你生气了我居然没察觉到，还自顾自地扯其他话题，没有及时哄你，让你觉得我不在乎你的情绪。</span><br>
-						<span class="say"> </span><br>
-                         <span class="say">· 我真的不是故意的，更不是虚情假意。只是我太不会处理这些情况，笨手笨脚的总做错事。</span><br>
-						<span class="say"> </span><br>
-                        
-                         <span class="say">· 我在努力学着怎么去爱一个人，虽然现在做得不好，但我会慢慢变好的，因为那个人是你。</span><br>
-						<span class="say"> </span><br>
-                         <span class="say">· 请相信我，我对你的心意都是真的。</span><br>
-						<span class="say"> </span><br>
-
-			        </div>
-                </div>
-                <div id="clock-box">
-                   
-                  <div id="clock"></div>
-              </div>
-              <canvas id="canvas" width="1100" height="680"></canvas>
-              </div>
-            
-        </div>
-    
-    <script>
-    </script>
-
-    <script>
-    (function(){
-        var canvas = $('#canvas');
-		
-        if (!canvas[0].getContext) {
-            $("#error").show();
-            return false;
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收银台 | Checkout</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --secondary-color: #f8f9fa;
+            --border-color: #e0e0e0;
+            --text-color: #333;
+            --text-light: #666;
+            --error-color: #f44336;
+            --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
         }
-
-        var width = canvas.width();
-        var height = canvas.height();
         
-        canvas.attr("width", width);
-        canvas.attr("height", height);
-
-        var opts = {
-            seed: {
-                x: width / 2 - 20,
-                color: "rgb(190, 26, 37)",
-                scale: 2
-            },
-            branch: [
-                [535, 680, 570, 250, 500, 200, 30, 100, [
-                    [540, 500, 455, 417, 340, 400, 13, 100, [
-                        [450, 435, 434, 430, 394, 395, 2, 40]
-                    ]],
-                    [550, 445, 600, 356, 680, 345, 12, 100, [
-                        [578, 400, 648, 409, 661, 426, 3, 80]
-                    ]],
-                    [539, 281, 537, 248, 534, 217, 3, 40],
-                    [546, 397, 413, 247, 328, 244, 9, 80, [
-                        [427, 286, 383, 253, 371, 205, 2, 40],
-                        [498, 345, 435, 315, 395, 330, 4, 60]
-                    ]],
-                    [546, 357, 608, 252, 678, 221, 6, 100, [
-                        [590, 293, 646, 277, 648, 271, 2, 80]
-                    ]]
-                ]] 
-            ],
-            bloom: {
-                num: 700,
-                width: 1080,
-                height: 650,
-            },
-            footer: {
-                width: 1200,
-                height: 5,
-                speed: 10,
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .checkout-container {
+            background-color: white;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            margin: auto;
+        }
+        
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: clamp(20px, 5vw, 24px);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .language-selector {
+            text-align: right;
+            margin-bottom: 25px;
+        }
+        
+        .language-selector select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: white;
+            font-size: 14px;
+            color: var(--text-color);
+            outline: none;
+            transition: var(--transition);
+            width: auto;
+        }
+        
+        .language-selector select:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 15px;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            -moz-appearance: textfield;
+            transition: var(--transition);
+        }
+        
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        input[type="number"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+            outline: none;
+        }
+        
+        .payment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+        
+        .payment-header:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .payment-options {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            background-color: white;
+        }
+        
+        .payment-options.expanded {
+            display: flex;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .payment-option:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+        
+        .payment-option input {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .error {
+            color: var(--error-color);
+            font-size: 13px;
+            margin-top: 6px;
+            display: none;
+            padding-left: 5px;
+        }
+        
+        .arrow {
+            transition: var(--transition);
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .arrow.down {
+            transform: rotate(90deg);
+            color: var(--primary-color);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .checkout-container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 22px;
+                margin-bottom: 25px;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
             }
         }
-
-        var tree = new Tree(canvas[0], width, height, opts);
-        var seed = tree.seed;
-        var foot = tree.footer;
-        var hold = 1;
-
-        canvas.click(function(e) {
-            var offset = canvas.offset(), x, y;
-            x = e.pageX - offset.left;
-            y = e.pageY - offset.top;
-            if (seed.hover(x, y)) {
-                hold = 0; 
-                canvas.unbind("click");
-                canvas.unbind("mousemove");
-                canvas.removeClass('hand');
+        
+        @media (max-width: 480px) {
+            .checkout-container {
+                padding: 20px;
             }
-        }).mousemove(function(e){
-            var offset = canvas.offset(), x, y;
-            x = e.pageX - offset.left;
-            y = e.pageY - offset.top;
-            canvas.toggleClass('hand', seed.hover(x, y));
+            
+            h1 {
+                font-size: 20px;
+                padding-bottom: 10px;
+            }
+            
+            input[type="number"], button {
+                padding: 12px;
+            }
+            
+            .payment-option {
+                padding: 10px 12px;
+            }
+        }
+        
+        /* 横屏设备适配 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+            }
+            
+            .checkout-container {
+                padding: 15px;
+                max-width: 90%;
+            }
+            
+            h1 {
+                margin-bottom: 15px;
+                font-size: 18px;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+            
+            input[type="number"], button {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="language-selector">
+            <select id="language-select">
+                <option value="zh">简体中文</option>
+                <option value="en">English</option>
+                <option value="ms">Malaysia</option>
+            </select>
+        </div>
+        
+        <h1 id="title">收银台</h1>
+        
+        <form id="checkout-form">
+            <div class="form-group">
+                <label for="amount" id="amount-label">金额</label>
+                <input type="number" id="amount" name="amount" min="0.01" step="0.01" placeholder="0.00">
+                <div class="error" id="amount-error">请输入有效金额</div>
+            </div>
+            
+            <div class="form-group">
+                <div class="payment-header" id="payment-header">
+                    <span id="payment-method-label">支付方式</span>
+                    <span class="arrow">▶</span>
+                </div>
+                <div class="payment-options" id="payment-options">
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="alipay" checked>
+                        <span id="alipay-label">支付宝</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="wechat">
+                        <span id="wechat-label">微信支付</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="credit-card">
+                        <span id="credit-card-label">信用卡</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="touchngo">
+                        <span id="touchngo-label">Touch 'n Go</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="grabpay">
+                        <span id="grabpay-label">GrabPay</span>
+                    </label>
+                </div>
+                <div class="error" id="payment-error">请选择支付方式</div>
+            </div>
+            
+            <button type="submit" id="pay-button">支付</button>
+        </form>
+    </div>
+
+    <script>
+        // 多语言支持
+        const translations = {
+            zh: {
+                title: "收银台",
+                amountLabel: "金额",
+                amountPlaceholder: "0.00",
+                paymentMethodLabel: "支付方式",
+                alipay: "支付宝",
+                wechat: "微信支付",
+                creditCard: "信用卡",
+                touchngo: "Touch 'n Go",
+                grabpay: "GrabPay",
+                payButton: "支付",
+                amountError: "请输入有效金额",
+                paymentError: "请选择支付方式",
+                successMessage: "支付成功！"
+            },
+            en: {
+                title: "Checkout",
+                amountLabel: "Amount",
+                amountPlaceholder: "0.00",
+                paymentMethodLabel: "Payment Method",
+                alipay: "Alipay",
+                wechat: "WeChat Pay",
+                creditCard: "Credit Card",
+                touchngo: "Touch 'n Go",
+                grabpay: "GrabPay",
+                payButton: "Pay Now",
+                amountError: "Please enter a valid amount",
+                paymentError: "Please select a payment method",
+                successMessage: "Payment successful!"
+            },
+            ms: {
+                title: "Pembayaran",
+                amountLabel: "Jumlah",
+                amountPlaceholder: "0.00",
+                paymentMethodLabel: "Kaedah Pembayaran",
+                alipay: "Alipay",
+                wechat: "WeChat Pay",
+                creditCard: "Kad Kredit",
+                touchngo: "Touch 'n Go",
+                grabpay: "GrabPay",
+                payButton: "Bayar Sekarang",
+                amountError: "Sila masukkan jumlah yang sah",
+                paymentError: "Sila pilih kaedah pembayaran",
+                successMessage: "Pembayaran berjaya!"
+            }
+        };
+
+        // 切换语言
+        document.getElementById('language-select').addEventListener('change', function() {
+            const lang = this.value;
+            updateLanguage(lang);
         });
 
-        var seedAnimate = eval(Jscex.compile("async", function () {
-            seed.draw();
-            while (hold) {
-                $await(Jscex.Async.sleep(10));
+        function updateLanguage(lang) {
+            const t = translations[lang];
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('amount-label').textContent = t.amountLabel;
+            document.getElementById('amount').placeholder = t.amountPlaceholder;
+            document.getElementById('payment-method-label').textContent = t.paymentMethodLabel;
+            document.getElementById('alipay-label').textContent = t.alipay;
+            document.getElementById('wechat-label').textContent = t.wechat;
+            document.getElementById('credit-card-label').textContent = t.creditCard;
+            document.getElementById('touchngo-label').textContent = t.touchngo;
+            document.getElementById('grabpay-label').textContent = t.grabpay;
+            document.getElementById('pay-button').textContent = t.payButton;
+            document.getElementById('amount-error').textContent = t.amountError;
+            document.getElementById('payment-error').textContent = t.paymentError;
+        }
+
+        // 表单验证
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const amount = document.getElementById('amount').value;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked');
+            const lang = document.getElementById('language-select').value;
+            const t = translations[lang];
+            
+            let isValid = true;
+            
+            // 验证金额
+            if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+                document.getElementById('amount-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('amount-error').style.display = 'none';
             }
-            while (seed.canScale()) {
-                seed.scale(0.95);
-                $await(Jscex.Async.sleep(10));
+            
+            // 验证支付方式
+            if (!paymentMethod) {
+                document.getElementById('payment-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('payment-error').style.display = 'none';
             }
-            while (seed.canMove()) {
-                seed.move(0, 2);
-                foot.draw();
-                $await(Jscex.Async.sleep(10));
+            
+            if (isValid) {
+                alert(t.successMessage);
             }
-        }));
+        });
 
-        var growAnimate = eval(Jscex.compile("async", function () {
-            do {
-    	        tree.grow();
-                $await(Jscex.Async.sleep(10));
-            } while (tree.canGrow());
-        }));
+        // 高亮选中的支付方式并更新显示文本
+        document.querySelectorAll('.payment-option input').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('.payment-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                if (this.checked) {
+                    this.parentElement.classList.add('selected');
+                    
+                    // 获取当前语言的翻译
+                    const lang = document.getElementById('language-select').value;
+                    const t = translations[lang];
+                    
+                    // 根据选择的支付方式更新显示文本
+                    const paymentMethodLabel = document.getElementById('payment-method-label');
+                    switch(this.value) {
+                        case 'alipay':
+                            paymentMethodLabel.textContent = t.alipay;
+                            break;
+                        case 'wechat':
+                            paymentMethodLabel.textContent = t.wechat;
+                            break;
+                        case 'credit-card':
+                            paymentMethodLabel.textContent = t.creditCard;
+                            break;
+                        case 'touchngo':
+                            paymentMethodLabel.textContent = t.touchngo;
+                            break;
+                        case 'grabpay':
+                            paymentMethodLabel.textContent = t.grabpay;
+                            break;
+                        default:
+                            paymentMethodLabel.textContent = t.paymentMethodLabel;
+                    }
+                }
+            });
+        });
 
-        var flowAnimate = eval(Jscex.compile("async", function () {
-            do {
-    	        tree.flower(2);
-                $await(Jscex.Async.sleep(10));
-            } while (tree.canFlower());
-        }));
+        // 展开/收起支付方式
+        document.getElementById('payment-header').addEventListener('click', function() {
+            const options = document.getElementById('payment-options');
+            const arrow = this.querySelector('.arrow');
+            
+            options.classList.toggle('expanded');
+            arrow.classList.toggle('down');
+        });
 
-        var moveAnimate = eval(Jscex.compile("async", function () {
-            tree.snapshot("p1", 240, 0, 610, 680);
-            while (tree.move("p1", 500, 0)) {
-                foot.draw();
-                $await(Jscex.Async.sleep(10));
-            }
-            foot.draw();
-            tree.snapshot("p2", 500, 0, 610, 680);
-
-
-            canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
-            canvas.css("background", "#ffe");
-            $await(Jscex.Async.sleep(300));
-            canvas.css("background", "none");
-        }));
-
-        var jumpAnimate = eval(Jscex.compile("async", function () {
-            var ctx = tree.ctx;
-            while (true) {
-                tree.ctx.clearRect(0, 0, width, height);
-                tree.jump();
-                foot.draw();
-                $await(Jscex.Async.sleep(25));
-            }
-        }));
-       //下面修改起始日期
-        var textAnimate = eval(Jscex.compile("async", function () {
-		    var together = new Date();
-		    together.setFullYear(2025, 8, 8); 			//时间年月日 月份0~11
-		    together.setHours(16);						//小时	
-		    together.setMinutes(28);					//分钟
-		    together.setSeconds(2);					//秒前一位
-		    together.setMilliseconds(2);				//秒第二位
-
-		    $("#code").show().typewriter();
-            $("#clock-box").fadeIn(500);
-            while (true) {
-                timeElapse(together);
-                $await(Jscex.Async.sleep(1000));
-            }
-        }));
-
-        var runAsync = eval(Jscex.compile("async", function () {
-            $await(seedAnimate());
-            $await(growAnimate());
-            $await(flowAnimate());
-            $await(moveAnimate());
-
-            textAnimate().start();
-
-            $await(jumpAnimate());
-        }));
-
-        runAsync().start();
-    })();
+        // 初始化语言
+        updateLanguage('zh');
     </script>
-    <iframe src = "./给你们.mp3" allow = "autoplay" hidden /> //自己修改音乐位置
 </body>
 </html>
